@@ -1,20 +1,47 @@
+#!/usr/bin/env python3
+""" Auth module """
 from flask import request
 from typing import List, TypeVar
+from models.user import User
 
 
 class Auth:
-    """ classs to handle Authentication """
+    """ class auth for authenticating users"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ Require authentication
-        return:
-            -return Flase
-        """
-        return False
+        """ require auth function that returns false"""
+        if excluded_paths and path:
+            if path[-1] == '/':
+                new_path = path[:-1]
+            else:
+                new_path = path
+            new_excluded_path = []
+            for element in excluded_paths:
+                if element[-1] == '/':
+                    new_excluded_path.append(element[:-1])
+                if element[-1] == '*':
+                    if new_path.startswith(element[:-1]):
+                        return False
+
+            if new_path not in new_excluded_path:
+                return True
+            else:
+                return False
+        if path is None:
+            return True
+        if not excluded_paths:
+            return True
 
     def authorization_header(self, request=None) -> str:
-        """ Authorization header to return None """
-        return None
+        """ authorization header"""
+        if request is None:
+            return None
+        authorization = request.headers.get('Authorization')
+        if authorization is None:
+            return None
+        else:
+            return authorization
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """ Checks The current user and returns the object """
+        """ return current user else None"""
         return None
