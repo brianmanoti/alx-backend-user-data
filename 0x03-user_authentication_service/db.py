@@ -45,3 +45,27 @@ class DB:
         session.add(user)
         session.commit()
         return user
+
+      def find_user_by(self, **kwargs) -> User:
+        """
+        Finds a User in the Database.
+        """
+        if not kwargs or any(x not in VALID_FIELDS for x in kwargs):
+            raise InvalidRequestError
+        session = self._session
+        try:
+            return session.query(User).filter_by(**kwargs).one()
+        except Exception:
+            raise NoResultFound
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        updating a user in the database
+        """
+        session = self._session
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if k not in VALID_FIELDS:
+                raise ValueError
+            setattr(user, k, v)
+        session.commit()
