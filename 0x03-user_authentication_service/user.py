@@ -9,7 +9,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    """The User Class 
+    """The User Class
 
     Args:
         Base (_type_): _description_
