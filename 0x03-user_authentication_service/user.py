@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-""" Creating A User Table In SQLAlchemy """
+""" Creating A Table Using SQLALCHEMY
+"""
 
-from sqlalchemy import column, integer, string
 
-class User:
-    """ The class user to represent our user table """
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
+
+
+class User(Base):
+    """The User Class 
+
+    Args:
+        Base (_type_): _description_
+    """
     __tablename__ = 'users'
 
-    id = Column(integer, primary_key=True)
-    email = Column(string(250), nullable=False)
-    hashed_password = Column(string(250), nullable=False)
-    session_id = Column(string(250), nullable=True)
-    reset_token = column(string, nullable=True)
-
-    def __repr__(self):
-        """
-        String Rep
-        """
-        return f"User: id={self.id}"
+    id = Column(Integer, primary_key=True)
+    email = Column(String(250), nullable=False)
+    hashed_password = Column(String(250), nullable=False)
+    session_id = Column(String(250), nullable=True)
+    reset_token = Column(String(250), nullable=True)
