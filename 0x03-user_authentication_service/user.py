@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
-"""
-in This Module We are Going to create a class user to represent
-a table in sqlalchemy
-"""
+""" Creating A User Table In SQLAlchemy """
 
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import column, integer, string
-
-Base = declarative_base()
 
 class User:
     """ The class user to represent our user table """
